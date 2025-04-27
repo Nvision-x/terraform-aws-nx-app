@@ -65,5 +65,6 @@ module "postgresql" {
   manage_master_user_password  = var.manage_master_user_password
   parameter_group_name         = var.parameter_group_name
   skip_final_snapshot          = var.skip_final_snapshot
+  create_db_parameter_group    = false
   tags                         = var.tags
 }
