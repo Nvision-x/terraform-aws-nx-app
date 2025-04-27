@@ -164,16 +164,6 @@ variable "postgres_version" {
   type        = string
 }
 
-variable "db_security_group_name" {
-  description = "The name of the database security group"
-  type        = string
-}
-
-variable "postgres_version" {
-  description = "PostgreSQL version for the RDS instance"
-  type        = string
-}
-
 variable "allow_major_version_upgrade" {
   description = "Whether to allow major version upgrades during updates"
   type        = bool
