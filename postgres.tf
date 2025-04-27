@@ -1,8 +1,9 @@
 # DB Subnet Group
 resource "aws_db_subnet_group" "private" {
-  count      = var.enable_postgres ? 1 : 0
-  name       = var.db_subnet_group_name
-  subnet_ids = var.private_subnets
+  count       = var.enable_postgres ? 1 : 0
+  name        = var.db_subnet_group_name
+  subnet_ids  = var.private_subnets
+  description = var.subnet_group_description
 }
 
 # Security Group for PostgreSQL

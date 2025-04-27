@@ -112,6 +112,12 @@ variable "existing_pem" {
 
 # ----------------------------- PostgreSQL -------------------------------
 
+variable "subnet_group_description" {
+  description = "Description for the RDS subnet group"
+  type        = string
+  default     = "Managed by Terraform"
+}
+
 variable "enable_postgres" {
   description = "Flag to enable/disable PostgreSQL and related resources"
   type        = bool
