@@ -30,9 +30,9 @@ resource "aws_security_group" "db_sg" {
 
 # RDS PostgreSQL Instance
 module "postgresql" {
-  count  = var.enable_postgres ? 1 : 0
-  source = "terraform-aws-modules/rds/aws"
-
+  count      = var.enable_postgres ? 1 : 0
+  source     = "terraform-aws-modules/rds/aws"
+  version    = "6.12.0"
   identifier = var.db_identifier
   engine     = "postgres"
   family     = "postgres${var.postgres_version}"
@@ -45,6 +45,7 @@ module "postgresql" {
   publicly_accessible   = false
   storage_encrypted     = true
 
+
   db_name  = var.db_name
   username = var.username
   password = var.postgres_password
@@ -53,9 +54,15 @@ module "postgresql" {
   vpc_security_group_ids = [aws_security_group.db_sg[0].id]
   db_subnet_group_name   = aws_db_subnet_group.private[0].name
 
-  maintenance_window           = "Mon:00:00-Mon:03:00"
-  backup_window                = "03:00-06:00"
-  backup_retention_period      = 7
-  performance_insights_enabled = false
+  backup_retention_period      = var.backup_retention_period
+  performance_insights_enabled = var.performance_insights_enabled
+  allow_major_version_upgrade  = var.allow_major_version_upgrade
+  apply_immediately            = var.apply_immediately
+  backup_window                = var.backup_window
+  copy_tags_to_snapshot        = var.copy_tags_to_snapshot
+  maintenance_window           = var.maintenance_window
+  manage_master_user_password  = var.manage_master_user_password
+  parameter_group_name         = var.parameter_group_name
+  skip_final_snapshot          = var.skip_final_snapshot
   tags                         = var.tags
 }

@@ -190,6 +190,66 @@ variable "postgres_version" {
   type        = string
 }
 
+variable "allow_major_version_upgrade" {
+  description = "Whether to allow major version upgrades during updates"
+  type        = bool
+  default     = false
+}
+
+variable "apply_immediately" {
+  description = "Whether to apply changes immediately or during the next maintenance window"
+  type        = bool
+  default     = false
+}
+
+variable "backup_window" {
+  description = "Preferred backup window"
+  type        = string
+  default     = "03:00-06:00"
+}
+
+variable "copy_tags_to_snapshot" {
+  description = "Whether to copy tags to snapshots"
+  type        = bool
+  default     = true
+}
+
+variable "maintenance_window" {
+  description = "Preferred maintenance window"
+  type        = string
+  default     = "mon:00:00-mon:03:00"
+}
+
+variable "manage_master_user_password" {
+  description = "Whether the master user password is managed by RDS automatically"
+  type        = bool
+  default     = false
+}
+
+variable "parameter_group_name" {
+  description = "Name of the DB parameter group to associate"
+  type        = string
+  default     = null
+}
+
+variable "skip_final_snapshot" {
+  description = "Whether to skip the final snapshot before deleting the instance"
+  type        = bool
+  default     = false
+}
+
+variable "backup_retention_period" {
+  description = "The number of days to retain backups for"
+  type        = number
+  default     = 7
+}
+
+variable "performance_insights_enabled" {
+  description = "Specifies whether Performance Insights are enabled"
+  type        = bool
+  default     = false
+}
+
 # --------------------------- OpenSearch ---------------------------------
 
 variable "enable_opensearch" {
