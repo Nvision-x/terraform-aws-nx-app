@@ -48,6 +48,7 @@ module "nx" {
   number_of_master_nodes          = var.number_of_master_nodes
   number_of_nodes                 = var.number_of_nodes
   ebs_volume_type                 = var.ebs_volume_type
+  subnet_group_description        = var.subnet_group_description
 
   enable_nfs               = var.enable_nfs
   nfs_os_private_subnet_id = var.nfs_os_private_subnet_id
