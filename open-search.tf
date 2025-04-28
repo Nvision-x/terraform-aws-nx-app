@@ -80,10 +80,7 @@ module "opensearch" {
   }
   engine_version = var.engine_version
 
-  log_publishing_options = [
-    { log_type = "INDEX_SLOW_LOGS" },
-    { log_type = "SEARCH_SLOW_LOGS" },
-  ]
+  log_publishing_options = var.opensearch_log_publishing_options
   node_to_node_encryption = {
     enabled = true
   }

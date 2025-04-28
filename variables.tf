@@ -346,6 +346,15 @@ variable "opensearch_subnet_ids" {
   type        = list(string)
 }
 
+variable "opensearch_log_publishing_options" {
+  description = "List of log publishing options for OpenSearch"
+  type = list(object({
+    log_type = string
+  }))
+  default = []
+}
+
+
 
 # --------------------- Tag -----------------------------
 
