@@ -354,6 +354,13 @@ variable "opensearch_log_publishing_options" {
   default = []
 }
 
+variable "auto_software_update_enabled" {
+  description = "Whether automatic software updates are enabled"
+  type        = bool
+  default     = false
+}
+
+
 # --------------------- Tag -----------------------------
 
 variable "tags" {

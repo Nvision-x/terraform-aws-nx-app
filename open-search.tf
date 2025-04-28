@@ -88,5 +88,8 @@ module "opensearch" {
     security_group_ids = [aws_security_group.opensearch_sg[0].id]
     subnet_ids         = var.opensearch_subnet_ids
   }
+  software_update_options = {
+    auto_software_update_enabled = var.auto_software_update_enabled
+  }
   tags = var.tags
 }
