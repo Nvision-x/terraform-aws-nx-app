@@ -35,6 +35,8 @@ module "opensearch" {
 
   # Domain
   advanced_options = {
+    "indices.fielddata.cache.size"           = "20"
+    "indices.query.bool.max_clause_count"    = "1024"
     "rest.action.multi.allow_explicit_index" = "true"
   }
 
@@ -60,7 +62,7 @@ module "opensearch" {
     zone_awareness_config = {
       availability_zone_count = var.zone_awareness_enabled ? var.availability_zone_count : 1
     }
-    zone_awareness_enabled = false
+    zone_awareness_enabled = var.zone_awareness_enabled
   }
 
   domain_endpoint_options = {
