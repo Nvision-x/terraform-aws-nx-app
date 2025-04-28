@@ -1,0 +1,102 @@
+# 🚀 Steps to Deploy
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/Nvision-x/terraform-aws-nx-app.git
+cd terraform-aws-nx-app/examples/simple-deployment
+```
+
+## 2. Configure the Backend (Optional but Recommended)
+
+Edit the `provider.tf` file and configure your remote backend (e.g., S3 + DynamoDB).
+
+Example configuration:
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "your-terraform-state-bucket"
+    key            = "nx-stack/terraform.tfstate"
+    region         = "us-east-2"
+    dynamodb_table = "your-terraform-lock-table"
+    encrypt        = true
+  }
+}
+```
+
+> **Note:** If you prefer to work with a local backend, comment out or remove the backend block.
+
+## 3. Configure `terraform.tfvars`
+
+Create your `terraform.tfvars` by copying the example:
+
+```bash
+cp terraform.tfvars.example terraform.tfvars
+```
+
+Then edit `terraform.tfvars` and update it with your environment-specific values (VPC ID, Subnets, Cluster Name, etc.).
+
+## 4. Initialize Terraform
+
+```bash
+terraform init
+```
+
+This will download all required Terraform providers and modules.
+
+## 5. Apply Only the EKS Cluster First
+
+```bash
+terraform apply -target=module.nx
+```
+
+This creates the EKS cluster independently before applying addons or optional components.
+
+## 6. Apply the Full Infrastructure
+
+```bash
+terraform apply
+```
+
+This completes the full Nx stack deployment, including addons, databases, OpenSearch, and optional NFS setup.
+
+# 📋 Important Notes
+
+- If PostgreSQL, OpenSearch, or NFS resources are already created externally, set the following variables to `false` before applying:
+
+```hcl
+enable_postgres  = false
+enable_opensearch = false
+enable_nfs        = false
+```
+
+- After the EKS cluster is created, you can import existing PostgreSQL and OpenSearch resources into Terraform state using `terraform import` commands.
+- Later, you can enable NFS creation by setting `enable_nfs = true` and reapplying Terraform.
+
+# 🛡️ Prerequisites
+- This must be executed on an EC2 instance located within the VPC where the resources will be deployed.
+- Terraform v1.3 or higher
+- AWS CLI installed and configured
+- IAM user or role with permissions to create:
+  - EKS cluster and node groups
+  - RDS PostgreSQL
+  - EC2 instances
+  - IAM roles and policies
+  - Security groups
+
+# 📦 Repository Structure
+
+```plaintext
+terraform-aws-nx-app/
+├── modules/
+├── examples/
+│   └── full-deploy/
+│       ├── main.tf
+│       ├── provider.tf
+│       ├── terraform.tfvars.example
+│       └── README.md (this file)
+├── variables.tf
+├── outputs.tf
+└── README.md
+```
