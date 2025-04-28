@@ -93,7 +93,9 @@ Terraform module to provision the complete AWS infrastructure stack for the NX a
 |||||
 |**NFS Variables** ||||
 | enable_nfs                     | Flag to deploy EC2 for NFS server                | `bool`          | ✅        |
-| nfs_os_private_subnet_id       | Subnet ID for NFS EC2 instance                    | `string`        | ✅        |
+| nfs_ingress_rules              | List of ingress rules for nfs                    | `list(object)`  | ❌ (default: []) |
+| nfs_private_subnet_id          | Subnet ID for NFS EC2 instance                    | `string`        | ✅        |
+| nfs_security_group_description | Description for NFS security group                | `string`        | ❌ (default: "Allow SSH and NFS access") |
 | key_name                       | Key pair name for EC2 instance                    | `string`        | ✅        |
 | instance_type                  | Instance type for EC2 instance                    | `string`        | ✅        |
 | disk_size                      | Size of root disk for EC2 instance (in GB)         | `number`        | ❌ (default: 100) |
