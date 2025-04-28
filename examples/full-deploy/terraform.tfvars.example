@@ -1,0 +1,99 @@
+# --------------------- Global/Provider ---------------------
+
+region = "us-east-1"
+
+# --------------------- Networking ---------------------
+
+private_subnets = ["subnet-0123456789abcdef0", "subnet-abcdef0123456789"]
+vpc_cidr_block  = "10.0.0.0/16"
+vpc_id          = "vpc-0123456789abcdef0"
+
+# --------------------- EKS ---------------------
+
+autoscaler_role_name          = "cluster-autoscaler-tf"
+autoscaler_service_account    = "cluster-autoscaler"
+cluster_name                  = "nx-cluster"
+cluster_version               = "1.32"
+instance_types                = ["c7i.2xlarge"]
+lb_controller_role_name       = "aws-load-balancer-controller-tf"
+lb_controller_service_account = "aws-load-balancer-controller"
+node_group_1_name             = "node-group-eks"
+node_group_2_max_size         = 2
+node_group_2_min_size         = 2
+node_group_2_name             = "node-group-default"
+
+# --------------------- NFS ---------------------
+
+ami                      = "ami-0abcdef1234567890"
+disk_size                = 100
+ec2_name                 = "nx-nfs-server"
+enable_nfs               = false
+existing_pem             = ""
+instance_type            = "t3.medium"
+key_name                 = "nx-keypair"
+nfs_private_subnet_id = "subnet-0123456789abcdef0"
+security_group_name      = "nx-nfs-sg"
+
+# --------------------- PostgreSQL ---------------------
+
+allocated_storage            = "50"
+allow_major_version_upgrade  = false
+apply_immediately            = false
+backup_retention_period      = 7
+backup_window                = "05:36-06:06"
+copy_tags_to_snapshot        = true
+db_identifier                = "nx-postgres"
+db_name                      = "nvisnx"
+db_security_group_name       = "nx-db-sg"
+db_subnet_group_name         = "nx-db-subnet-group"
+enable_postgres              = false
+instance_class               = "db.t3.medium"
+maintenance_window           = "tue:03:00-tue:03:30"
+manage_master_user_password  = false
+parameter_group_name         = null
+performance_insights_enabled = false
+postgres_ingress_rules = [
+  {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+]
+postgres_password        = "ChangeMeStrongPassword!"
+postgres_version         = "16"
+skip_final_snapshot      = true
+subnet_group_description = "nx-db-subnet-group"
+username                 = "nvisnx"
+
+# --------------------- OpenSearch ---------------------
+
+domain_name                              = "nx-opensearch-domain"
+ebs_volume_size                          = "50"
+ebs_volume_type                          = "gp3"
+enable_masternodes                       = false
+enable_opensearch                        = false
+engine_version                           = "Elasticsearch_7.10"
+master_user_name                         = "admin-user"
+number_of_master_nodes                   = 0
+number_of_nodes                          = 3
+opensearch_ingress_rules = [
+  {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+]
+opensearch_instance_type                 = "r7g.large.search"
+opensearch_master_user_password          = "ChangeMeAnotherStrongPassword!"
+opensearch_security_group_description    = "Security group for OpenSearch"
+opensearch_security_group_name           = "nx-opensearch-sg"
+opensearch_subnet_ids                    = ["subnet-0123456789abcdef0", "subnet-abcdef0123456789"]
+
+# --------------------- Tags ---------------------
+
+tags = {
+  Environment = "dev"
+  Project     = "nx-app"
+}

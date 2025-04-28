@@ -7,9 +7,9 @@ variable "region" {
 
 # ----------------------------- Networking -------------------------------
 
-variable "vpc_id" {
-  description = "The ID of the VPC"
-  type        = string
+variable "private_subnets" {
+  description = "List of private subnets in the VPC"
+  type        = list(string)
 }
 
 variable "vpc_cidr_block" {
@@ -17,12 +17,22 @@ variable "vpc_cidr_block" {
   type        = string
 }
 
-variable "private_subnets" {
-  description = "List of private subnets in the VPC"
-  type        = list(string)
+variable "vpc_id" {
+  description = "The ID of the VPC"
+  type        = string
 }
 
 # ----------------------------- EKS --------------------------------------
+
+variable "autoscaler_role_name" {
+  description = "Name of IAM role for cluster autoscaler"
+  type        = string
+}
+
+variable "autoscaler_service_account" {
+  description = "Service account name for cluster autoscaler"
+  type        = string
+}
 
 variable "cluster_name" {
   description = "EKS Cluster Name"
@@ -39,44 +49,6 @@ variable "instance_types" {
   type        = list(string)
 }
 
-variable "node_group_1_name" {
-  description = "Name of the first managed node group"
-  type        = string
-}
-
-variable "node_group_2_name" {
-  description = "Name of the second managed node group"
-  type        = string
-}
-
-variable "node_group_2_min_size" {
-  description = "Minimum number of nodes in node group 2"
-  type        = number
-  default     = 1
-}
-
-variable "node_group_2_max_size" {
-  description = "Maximum number of nodes in node group 2"
-  type        = number
-  default     = 10
-}
-
-variable "namespace" {
-  description = "Namespace where resources will be created"
-  type        = string
-  default     = "kube-system"
-}
-
-variable "autoscaler_role_name" {
-  description = "Name of IAM role for cluster autoscaler"
-  type        = string
-}
-
-variable "autoscaler_service_account" {
-  description = "Service account name for cluster autoscaler"
-  type        = string
-}
-
 variable "lb_controller_role_name" {
   description = "Name of IAM role for load balancer controller"
   type        = string
@@ -87,25 +59,38 @@ variable "lb_controller_service_account" {
   type        = string
 }
 
+variable "namespace" {
+  description = "Namespace where resources will be created"
+  type        = string
+  default     = "kube-system"
+}
+
+variable "node_group_1_name" {
+  description = "Name of the first managed node group"
+  type        = string
+}
+
+variable "node_group_2_max_size" {
+  description = "Maximum number of nodes in node group 2"
+  type        = number
+  default     = 10
+}
+
+variable "node_group_2_min_size" {
+  description = "Minimum number of nodes in node group 2"
+  type        = number
+  default     = 1
+}
+
+variable "node_group_2_name" {
+  description = "Name of the second managed node group"
+  type        = string
+}
+
 # ----------------------------- NFS --------------------------------------
 
-variable "enable_nfs" {
-  description = "Flag to control EC2-related resource creation"
-  type        = bool
-}
-
-variable "nfs_os_private_subnet_id" {
-  description = "Private subnet ID where the EC2 instance will be deployed"
-  type        = string
-}
-
-variable "key_name" {
-  description = "Name of the key pair to use for the EC2 instance"
-  type        = string
-}
-
-variable "instance_type" {
-  description = "Instance type for the EC2 instance"
+variable "ami" {
+  description = "The AMI ID for the EC2 instance"
   type        = string
 }
 
@@ -115,19 +100,14 @@ variable "disk_size" {
   default     = 100
 }
 
-variable "ami" {
-  description = "The AMI ID for the EC2 instance"
-  type        = string
-}
-
 variable "ec2_name" {
   description = "The Name tag for the EC2 instance"
   type        = string
 }
 
-variable "security_group_name" {
-  description = "The name of the security group for the EC2 instance"
-  type        = string
+variable "enable_nfs" {
+  description = "Flag to control EC2-related resource creation"
+  type        = bool
 }
 
 variable "existing_pem" {
@@ -136,63 +116,30 @@ variable "existing_pem" {
   default     = ""
 }
 
+variable "instance_type" {
+  description = "Instance type for the EC2 instance"
+  type        = string
+}
+
+variable "key_name" {
+  description = "Name of the key pair to use for the EC2 instance"
+  type        = string
+}
+
+variable "nfs_private_subnet_id" {
+  description = "Private subnet ID where the EC2 instance will be deployed"
+  type        = string
+}
+
+variable "security_group_name" {
+  description = "The name of the security group for the EC2 instance"
+  type        = string
+}
+
 # ----------------------------- PostgreSQL -------------------------------
-
-variable "subnet_group_description" {
-  description = "Description for the RDS subnet group"
-  type        = string
-  default     = "Subnet group for RDS instances"
-}
-
-variable "enable_postgres" {
-  description = "Flag to enable/disable PostgreSQL and related resources"
-  type        = bool
-}
-
-variable "instance_class" {
-  description = "The class of the RDS instance"
-  type        = string
-}
-
-variable "db_name" {
-  description = "The name of the database"
-  type        = string
-}
-
-variable "username" {
-  description = "The username for the database"
-  type        = string
-}
-
-variable "postgres_password" {
-  description = "The password for the database"
-  type        = string
-  sensitive   = true
-  default     = null
-}
 
 variable "allocated_storage" {
   description = "The size of the database storage in GB"
-  type        = string
-}
-
-variable "db_identifier" {
-  description = "The identifier for the RDS instance"
-  type        = string
-}
-
-variable "db_subnet_group_name" {
-  description = "The name of the database subnet group"
-  type        = string
-}
-
-variable "db_security_group_name" {
-  description = "The name of the database security group"
-  type        = string
-}
-
-variable "postgres_version" {
-  description = "PostgreSQL version for the RDS instance"
   type        = string
 }
 
@@ -208,16 +155,46 @@ variable "apply_immediately" {
   default     = false
 }
 
+variable "backup_retention_period" {
+  description = "The number of days to retain backups for"
+  type        = number
+  default     = 7
+}
+
 variable "backup_window" {
   description = "Preferred backup window"
   type        = string
   default     = "03:00-06:00"
 }
 
-variable "copy_tags_to_snapshot" {
-  description = "Whether to copy tags to snapshots"
+variable "db_identifier" {
+  description = "The identifier for the RDS instance"
+  type        = string
+}
+
+variable "db_name" {
+  description = "The name of the database"
+  type        = string
+}
+
+variable "db_security_group_name" {
+  description = "The name of the database security group"
+  type        = string
+}
+
+variable "db_subnet_group_name" {
+  description = "The name of the database subnet group"
+  type        = string
+}
+
+variable "enable_postgres" {
+  description = "Flag to enable/disable PostgreSQL and related resources"
   type        = bool
-  default     = true
+}
+
+variable "instance_class" {
+  description = "The class of the RDS instance"
+  type        = string
 }
 
 variable "maintenance_window" {
@@ -238,18 +215,6 @@ variable "parameter_group_name" {
   default     = null
 }
 
-variable "skip_final_snapshot" {
-  description = "Whether to skip the final snapshot before deleting the instance"
-  type        = bool
-  default     = false
-}
-
-variable "backup_retention_period" {
-  description = "The number of days to retain backups for"
-  type        = number
-  default     = 7
-}
-
 variable "performance_insights_enabled" {
   description = "Specifies whether Performance Insights are enabled"
   type        = bool
@@ -267,35 +232,42 @@ variable "postgres_ingress_rules" {
   default = []
 }
 
-# --------------------------- OpenSearch ---------------------------------
-
-variable "enable_opensearch" {
-  description = "Flag to enable or disable OpenSearch and related resources"
-  type        = bool
-}
-
-variable "master_user_name" {
-  description = "The username for the OpenSearch admin"
-  type        = string
-}
-
-variable "opensearch_master_user_password" {
-  description = "The password for the OpenSearch admin"
+variable "postgres_password" {
+  description = "The password for the database"
   type        = string
   sensitive   = true
   default     = null
-
 }
 
-variable "opensearch_instance_type" {
-  description = "The type of instance for the OpenSearch cluster"
+variable "postgres_version" {
+  description = "PostgreSQL version for the RDS instance"
   type        = string
 }
 
-variable "opensearch_security_group_name" {
-  description = "The name of the security group for OpenSearch"
+variable "skip_final_snapshot" {
+  description = "Whether to skip the final snapshot before deleting the instance"
+  type        = bool
+  default     = false
+}
+
+variable "subnet_group_description" {
+  description = "Description for the RDS subnet group"
+  type        = string
+  default     = "Subnet group for RDS instances"
+}
+
+variable "username" {
+  description = "The username for the database"
   type        = string
 }
+
+variable "copy_tags_to_snapshot" {
+  description = "Whether to copy tags to snapshots"
+  type        = bool
+  default     = true
+}
+
+# --------------------------- OpenSearch ---------------------------------
 
 variable "domain_name" {
   description = "The domain name for the OpenSearch cluster"
@@ -307,14 +279,30 @@ variable "ebs_volume_size" {
   type        = string
 }
 
-variable "engine_version" {
-  description = "The version of the OpenSearch engine"
+variable "ebs_volume_type" {
+  description = "EBS volume type for OpenSearch nodes"
   type        = string
+  default     = "gp3"
 }
 
 variable "enable_masternodes" {
   description = "Enable master nodes for OpenSearch"
   type        = bool
+}
+
+variable "enable_opensearch" {
+  description = "Flag to enable or disable OpenSearch and related resources"
+  type        = bool
+}
+
+variable "engine_version" {
+  description = "The version of the OpenSearch engine"
+  type        = string
+}
+
+variable "master_user_name" {
+  description = "The username for the OpenSearch admin"
+  type        = string
 }
 
 variable "number_of_master_nodes" {
@@ -325,17 +313,6 @@ variable "number_of_master_nodes" {
 variable "number_of_nodes" {
   description = "Number of data nodes for OpenSearch"
   type        = number
-}
-
-variable "ebs_volume_type" {
-  description = "EBS volume type for OpenSearch nodes"
-  type        = string
-  default     = "gp3"
-}
-
-variable "opensearch_subnet_ids" {
-  description = "List of private subnet IDs for OpenSearch"
-  type        = list(string)
 }
 
 variable "opensearch_ingress_rules" {
@@ -349,7 +326,29 @@ variable "opensearch_ingress_rules" {
   default = []
 }
 
-# --------------------- Tag -----------------------------
+variable "opensearch_instance_type" {
+  description = "The type of instance for the OpenSearch cluster"
+  type        = string
+}
+
+variable "opensearch_master_user_password" {
+  description = "The password for the OpenSearch admin"
+  type        = string
+  sensitive   = true
+  default     = null
+}
+
+variable "opensearch_security_group_name" {
+  description = "The name of the security group for OpenSearch"
+  type        = string
+}
+
+variable "opensearch_subnet_ids" {
+  description = "List of private subnet IDs for OpenSearch"
+  type        = list(string)
+}
+
+# ----------------------------- Tags --------------------------------------
 
 variable "tags" {
   description = "A map of tags to assign to all applicable resources"
@@ -358,4 +357,3 @@ variable "tags" {
     Project = "nx-app"
   }
 }
-
