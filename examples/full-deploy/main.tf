@@ -15,26 +15,27 @@ module "nx" {
   node_group_2_min_size = var.node_group_2_min_size
   node_group_2_max_size = var.node_group_2_max_size
 
-  enable_postgres              = var.enable_postgres
-  instance_class               = var.instance_class
-  db_name                      = var.db_name
-  username                     = var.username
-  postgres_password            = var.postgres_password
-  allocated_storage            = var.allocated_storage
-  db_identifier                = var.db_identifier
-  db_subnet_group_name         = var.db_subnet_group_name
-  db_security_group_name       = var.db_security_group_name
-  postgres_version             = var.postgres_version
-  allow_major_version_upgrade  = var.allow_major_version_upgrade
-  apply_immediately            = var.apply_immediately
-  backup_window                = var.backup_window
-  copy_tags_to_snapshot        = var.copy_tags_to_snapshot
-  maintenance_window           = var.maintenance_window
-  manage_master_user_password  = var.manage_master_user_password
-  parameter_group_name         = var.parameter_group_name
-  skip_final_snapshot          = var.skip_final_snapshot
-  backup_retention_period      = var.backup_retention_period
-  performance_insights_enabled = var.performance_insights_enabled
+  enable_postgres               = var.enable_postgres
+  instance_class                = var.instance_class
+  db_name                       = var.db_name
+  username                      = var.username
+  postgres_password             = var.postgres_password
+  allocated_storage             = var.allocated_storage
+  db_identifier                 = var.db_identifier
+  db_subnet_group_name          = var.db_subnet_group_name
+  db_security_group_name        = var.db_security_group_name
+  db_security_group_description = "Allow PostgreSQL access"
+  postgres_version              = var.postgres_version
+  allow_major_version_upgrade   = var.allow_major_version_upgrade
+  apply_immediately             = var.apply_immediately
+  backup_window                 = var.backup_window
+  copy_tags_to_snapshot         = var.copy_tags_to_snapshot
+  maintenance_window            = var.maintenance_window
+  manage_master_user_password   = var.manage_master_user_password
+  parameter_group_name          = var.parameter_group_name
+  skip_final_snapshot           = var.skip_final_snapshot
+  backup_retention_period       = var.backup_retention_period
+  performance_insights_enabled  = var.performance_insights_enabled
 
   enable_opensearch                     = var.enable_opensearch
   master_user_name                      = var.master_user_name
@@ -50,7 +51,7 @@ module "nx" {
   ebs_volume_type                       = var.ebs_volume_type
   subnet_group_description              = var.subnet_group_description
   opensearch_subnet_ids                 = var.opensearch_subnet_ids
-  opensearch_security_group_description = "os_sg"
+  opensearch_security_group_description = "os-sg"
 
   enable_nfs               = var.enable_nfs
   nfs_os_private_subnet_id = var.nfs_os_private_subnet_id
