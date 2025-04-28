@@ -1,6 +1,6 @@
 module "nx" {
-  # source = "git::https://github.com/Nvision-x/terraform-aws-nx.git?ref=v1.0.0"
-  source = "../.."
+  source = "git::https://github.com/Nvision-x/terraform-aws-nx-app.git?ref=v1.0.0"
+  # source = "../.."
 
   # --------------------- Global/Provider ---------------------
   region          = var.region
@@ -72,8 +72,8 @@ module "nx" {
 }
 
 module "eks_addons" {
-  # source = "git::https://github.com/Nvision-x/terraform-aws-eks-addons.git?ref=v1.0.0"
-  source = "../../../terraform-aws-eks-addons"
+  source = "git::https://github.com/Nvision-x/terraform-aws-eks-addons.git?ref=v1.0.0"
+  # source = "../../../terraform-aws-eks-addons"
 
   # --------------------- EKS Addons ---------------------
   autoscaler_role_name          = var.autoscaler_role_name
