@@ -60,15 +60,15 @@ module "nx" {
   opensearch_subnet_ids                 = var.opensearch_subnet_ids
 
   # --------------------- NFS ---------------------
-  ami                      = var.ami
-  disk_size                = var.disk_size
-  ec2_name                 = var.ec2_name
-  enable_nfs               = var.enable_nfs
-  existing_pem             = var.existing_pem
-  instance_type            = var.instance_type
-  key_name                 = var.key_name
-  nfs_os_private_subnet_id = var.nfs_private_subnet_id
-  security_group_name      = var.security_group_name
+  ami                   = var.ami
+  disk_size             = var.disk_size
+  ec2_name              = var.ec2_name
+  enable_nfs            = var.enable_nfs
+  existing_pem          = var.existing_pem
+  instance_type         = var.instance_type
+  key_name              = var.key_name
+  nfs_private_subnet_id = var.nfs_private_subnet_id
+  security_group_name   = var.security_group_name
 }
 
 module "eks_addons" {

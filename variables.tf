@@ -68,10 +68,30 @@ variable "enable_nfs" {
   type        = bool
 }
 
-variable "nfs_os_private_subnet_id" {
+variable "nfs_ingress_rules" {
+  description = "List of ingress rules for NFS EC2 security group"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+  default = []
+}
+
+
+variable "nfs_private_subnet_id" {
   description = "Private subnet ID where the EC2 instance will be deployed"
   type        = string
 }
+
+variable "nfs_security_group_description" {
+  description = "Description for the NFS EC2 security group"
+  type        = string
+  default     = "Allow SSH and NFS access"
+}
+
 
 variable "key_name" {
   description = "Name of the key pair to use for the EC2 instance"

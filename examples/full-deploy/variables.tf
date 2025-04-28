@@ -131,6 +131,19 @@ variable "nfs_private_subnet_id" {
   type        = string
 }
 
+variable "nfs_ingress_rules" {
+  description = "List of ingress rules for NFS EC2 security group"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+  default = []
+}
+
+
 variable "security_group_name" {
   description = "The name of the security group for the EC2 instance"
   type        = string

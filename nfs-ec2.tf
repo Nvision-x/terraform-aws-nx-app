@@ -4,21 +4,18 @@
 resource "aws_security_group" "ec2_sg" {
   count       = var.enable_nfs ? 1 : 0
   name        = var.security_group_name
-  description = "Allow SSH and NFS access within VPC CIDR"
+  description = var.nfs_security_group_description
   vpc_id      = var.vpc_id
 
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr_block]
-  }
-
-  ingress {
-    from_port   = 2049
-    to_port     = 2049
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr_block]
+  dynamic "ingress" {
+    for_each = var.nfs_ingress_rules
+    content {
+      description = ingress.value.description
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+    }
   }
 
   egress {
@@ -30,6 +27,7 @@ resource "aws_security_group" "ec2_sg" {
 
   tags = var.tags
 }
+
 
 # Generate TLS key only if no PEM is provided
 resource "tls_private_key" "ec2_key" {
@@ -50,7 +48,7 @@ resource "aws_instance" "nfs_ec2" {
   count                       = var.enable_nfs ? 1 : 0
   ami                         = var.ami
   instance_type               = var.instance_type
-  subnet_id                   = var.nfs_os_private_subnet_id
+  subnet_id                   = var.nfs_private_subnet_id
   vpc_security_group_ids      = [aws_security_group.ec2_sg[0].id]
   key_name                    = var.key_name
   associate_public_ip_address = false
