@@ -36,19 +36,21 @@ module "nx" {
   backup_retention_period      = var.backup_retention_period
   performance_insights_enabled = var.performance_insights_enabled
 
-  enable_opensearch               = var.enable_opensearch
-  master_user_name                = var.master_user_name
-  opensearch_master_user_password = var.opensearch_master_user_password
-  opensearch_instance_type        = var.opensearch_instance_type
-  opensearch_security_group_name  = var.opensearch_security_group_name
-  domain_name                     = var.domain_name
-  ebs_volume_size                 = var.ebs_volume_size
-  engine_version                  = var.engine_version
-  enable_masternodes              = var.enable_masternodes
-  number_of_master_nodes          = var.number_of_master_nodes
-  number_of_nodes                 = var.number_of_nodes
-  ebs_volume_type                 = var.ebs_volume_type
-  subnet_group_description        = var.subnet_group_description
+  enable_opensearch                     = var.enable_opensearch
+  master_user_name                      = var.master_user_name
+  opensearch_master_user_password       = var.opensearch_master_user_password
+  opensearch_instance_type              = var.opensearch_instance_type
+  opensearch_security_group_name        = var.opensearch_security_group_name
+  domain_name                           = var.domain_name
+  ebs_volume_size                       = var.ebs_volume_size
+  engine_version                        = var.engine_version
+  enable_masternodes                    = var.enable_masternodes
+  number_of_master_nodes                = var.number_of_master_nodes
+  number_of_nodes                       = var.number_of_nodes
+  ebs_volume_type                       = var.ebs_volume_type
+  subnet_group_description              = var.subnet_group_description
+  opensearch_subnet_ids                 = var.opensearch_subnet_ids
+  opensearch_security_group_description = "os_sg"
 
   enable_nfs               = var.enable_nfs
   nfs_os_private_subnet_id = var.nfs_os_private_subnet_id

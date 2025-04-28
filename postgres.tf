@@ -10,8 +10,18 @@ resource "aws_db_subnet_group" "private" {
 resource "aws_security_group" "db_sg" {
   count       = var.enable_postgres ? 1 : 0
   name        = var.db_security_group_name
-  description = "Allow PostgreSQL access"
+  description = var.db_security_group_description
   vpc_id      = var.vpc_id
+
+  dynamic "ingress" {
+    for_each = var.postgres_ingress_rules
+    content {
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+    }
+  }
 
   ingress {
     from_port   = 5432

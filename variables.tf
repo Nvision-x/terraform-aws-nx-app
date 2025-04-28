@@ -118,6 +118,12 @@ variable "subnet_group_description" {
   default     = "Managed by Terraform"
 }
 
+variable "db_security_group_description" {
+  description = "Description for the RDS security group"
+  type        = string
+  default     = "Managed by Terraform"
+}
+
 variable "enable_postgres" {
   description = "Flag to enable/disable PostgreSQL and related resources"
   type        = bool
@@ -230,6 +236,17 @@ variable "performance_insights_enabled" {
   default     = false
 }
 
+variable "postgres_ingress_rules" {
+  description = "List of ingress rules"
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+  default = []
+}
+
 
 # --------------------------- OpenSearch ---------------------------------
 
@@ -258,6 +275,11 @@ variable "opensearch_instance_type" {
 variable "opensearch_security_group_name" {
   description = "The name of the security group for OpenSearch"
   type        = string
+}
+variable "opensearch_security_group_description" {
+  description = "Description for the OpenSearch security group"
+  type        = string
+  default     = "Managed by Terraform"
 }
 
 variable "domain_name" {
@@ -295,6 +317,35 @@ variable "ebs_volume_type" {
   type        = string
   default     = "gp3"
 }
+
+variable "opensearch_ingress_rules" {
+  description = "List of ingress rules"
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+  default = []
+}
+
+variable "zone_awareness_enabled" {
+  description = "Whether to enable zone awareness for OpenSearch cluster"
+  type        = bool
+  default     = false
+}
+
+variable "availability_zone_count" {
+  description = "Number of Availability Zones to use if zone awareness is enabled"
+  type        = number
+  default     = 1
+}
+
+variable "opensearch_subnet_ids" {
+  description = "List of private subnet IDs for OpenSearch"
+  type        = list(string)
+}
+
 
 # --------------------- Tag -----------------------------
 

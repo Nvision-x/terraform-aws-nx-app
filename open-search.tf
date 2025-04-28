@@ -2,14 +2,17 @@
 resource "aws_security_group" "opensearch_sg" {
   count       = var.enable_opensearch ? 1 : 0
   name        = var.opensearch_security_group_name
-  description = "Security group for OpenSearch"
+  description = var.opensearch_security_group_description
   vpc_id      = var.vpc_id
 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr_block]
+  dynamic "ingress" {
+    for_each = var.opensearch_ingress_rules
+    content {
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+    }
   }
 
   egress {
@@ -27,6 +30,8 @@ resource "aws_security_group" "opensearch_sg" {
 module "opensearch" {
   count  = var.enable_opensearch ? 1 : 0
   source = "terraform-aws-modules/opensearch/aws"
+
+  create_security_group = false
 
   # Domain
   advanced_options = {
@@ -53,7 +58,7 @@ module "opensearch" {
     dedicated_master_type  = var.enable_masternodes ? var.opensearch_instance_type : ""
 
     zone_awareness_config = {
-      availability_zone_count = 1
+      availability_zone_count = var.zone_awareness_enabled ? var.availability_zone_count : 1
     }
     zone_awareness_enabled = false
   }
@@ -70,26 +75,21 @@ module "opensearch" {
     volume_type = var.ebs_volume_type
     volume_size = var.ebs_volume_size
   }
-
   encrypt_at_rest = {
     enabled = true
   }
-
   engine_version = var.engine_version
 
   log_publishing_options = [
     { log_type = "INDEX_SLOW_LOGS" },
     { log_type = "SEARCH_SLOW_LOGS" },
   ]
-
   node_to_node_encryption = {
     enabled = true
   }
-
   vpc_options = {
     security_group_ids = [aws_security_group.opensearch_sg[0].id]
-    subnet_ids         = [var.nfs_os_private_subnet_id]
+    subnet_ids         = var.opensearch_subnet_ids
   }
-
   tags = var.tags
 }
