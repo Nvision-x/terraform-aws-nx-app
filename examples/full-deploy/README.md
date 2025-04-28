@@ -4,7 +4,7 @@
 
 ```bash
 git clone https://github.com/Nvision-x/terraform-aws-nx-app.git
-cd terraform-aws-nx-app/examples/simple-deployment
+cd terraform-aws-nx-app/examples/full-deploy
 ```
 
 ## 2. Configure the Backend (Optional but Recommended)
