@@ -351,10 +351,8 @@ variable "opensearch_log_publishing_options" {
   type = list(object({
     log_type = string
   }))
-  default = null
+  default = []
 }
-
-
 
 # --------------------- Tag -----------------------------
 
