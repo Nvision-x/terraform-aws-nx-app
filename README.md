@@ -1,4 +1,4 @@
-# terraform-aws-nx
+# terraform-aws-nx-app
 
 Terraform module to provision the complete AWS infrastructure stack for the NX application. This includes:
 
