@@ -24,6 +24,8 @@ node_group_2_name             = "node-group-default"
 
 # --------------------- NFS ---------------------
 
+# ami for us-west-2 : ami-0f72881cd8392994c
+
 ami                   = "ami-0abcdef1234567890"
 disk_size             = 100
 ec2_name              = "nx-nfs-server"
