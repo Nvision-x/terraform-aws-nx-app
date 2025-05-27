@@ -50,7 +50,7 @@ module "eks" {
 }
 
 resource "aws_iam_policy" "ebs_permissions" {
-  name        = "ebs-permissions-policy"
+  name        = "ebs-permissions-policy-${var.cluster_name}"
   description = "Policy to allow EBS operations for EKS node group"
 
   policy = jsonencode({
