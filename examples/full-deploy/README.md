@@ -71,7 +71,7 @@ enable_opensearch = false
 enable_nfs        = false
 ```
 
-- After the EKS cluster is created, you can import existing PostgreSQL and OpenSearch resources into Terraform state using `terraform import` commands.
+- After the EKS cluster is created, you can import existing PostgreSQL and OpenSearch resources into Terraform state using `terraform import` commands by enabling enable_postgres and enable_opensearch.
 ```hcl
 terraform import 'module.nx.module.postgresql[0].module.db_instance.aws_db_instance.this[0]' <postgres-instance-name>
 terraform import 'module.nx.aws_security_group.db_sg[0]' <postgres-security-group-id>
