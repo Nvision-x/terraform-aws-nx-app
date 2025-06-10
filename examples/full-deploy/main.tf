@@ -1,5 +1,5 @@
 module "nx" {
-  source = "git::https://github.com/Nvision-x/terraform-aws-nx-app.git?ref=v1.0.0"
+  source = "git::https://github.com/Nvision-x/terraform-aws-nx-app.git"
   # source = "../.."
 
   # --------------------- Global/Provider ---------------------

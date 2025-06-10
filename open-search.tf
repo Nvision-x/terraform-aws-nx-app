@@ -28,9 +28,9 @@ resource "aws_security_group" "opensearch_sg" {
 
 # OpenSearch module configuration
 module "opensearch" {
-  count  = var.enable_opensearch ? 1 : 0
-  source = "terraform-aws-modules/opensearch/aws"
-
+  count                 = var.enable_opensearch ? 1 : 0
+  source                = "terraform-aws-modules/opensearch/aws"
+  version               = "1.7.0"
   create_security_group = false
 
   # Domain

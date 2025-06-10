@@ -1,0 +1,7 @@
+
+terraform import 'module.nx.module.postgresql[0].module.db_instance.aws_db_instance.this[0]' nvisionx
+terraform import 'module.nx.aws_security_group.db_sg[0]' sg-0dfdc2017ca50aefd
+terraform import 'module.nx.aws_db_subnet_group.private[0]' nvisionx-rdssubnetgroup-74rtuxkdhuid
+
+terraform import 'module.nx.module.opensearch[0].aws_opensearch_domain.this[0]' nvisionx
+terraform import 'module.nx.aws_security_group.opensearch_sg[0]' sg-07f13dd3cb0aa829e
