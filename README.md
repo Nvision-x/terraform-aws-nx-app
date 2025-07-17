@@ -21,9 +21,11 @@ Terraform module to provision the complete AWS infrastructure stack for the NX a
 
 ## 📦 Providers
 
-| Name     | Source              |
-|----------|---------------------|
-| aws      | hashicorp/aws       |
+| Name  | Source           | Version               |
+|-------|------------------|------------------------|
+| aws   | hashicorp/aws    | >= 5.92.0, < 6.0.0     |
+| helm  | hashicorp/helm   | >= 2.6.0, <= 2.17.0    |
+| kubectl | gavinbunney/kubectl | >= 1.14.0         |
 
 ---
 
@@ -124,7 +126,7 @@ Terraform module to provision the complete AWS infrastructure stack for the NX a
 
 ```hcl
 module "nx" {
-  source = "git::https://github.com/Nvision-x/terraform-aws-nx.git?ref=v1.0.0"
+  source = "git::https://github.com/Nvision-x/terraform-aws-nx.git?ref=v1.1.0"
   cluster_name = "nx-cluster"
   region       = "us-east-2"
   ...
