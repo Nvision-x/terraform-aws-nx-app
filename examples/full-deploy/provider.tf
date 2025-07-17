@@ -24,11 +24,11 @@ terraform {
     }
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 3.0"
+      version = ">= 5.92.0, < 6.0.0"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = ">= 2.6.0"
+      version = ">= 2.6.0, <= 2.17.0"
     }
   }
   required_version = ">= 1.0"
